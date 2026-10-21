@@ -3,14 +3,27 @@
 // ומציגה אותו ככותרת בראש האתר.
 
 function Header(props) {
-  // props = אובייקט שמכיל את כל הנתונים שהאב העביר לנו.
-  // כאן האב מעביר לנו את שם המשתמש.
+  // props = אובייקט שמכיל את כל הנתונים שהאב העביר לנו:
+  // userName — השם המוצג בכותרת
+  // onNameChange — פונקציה לעדכון השם (מקבלת את הערך החדש מהשדה)
 
   return (
     <header className="header">
-      {/* מציגים את שם המשתמש שקיבלנו מהאב */}
+      {/* מציגים את שם המשתמש — מתעדכן בזמן אמת בזמן ההקלדה */}
       <h1>ניהול משימות של {props.userName}</h1>
       <p>ברוך הבא לאתר ניהול המשימות</p>
+
+      {/* פקד להזנת השם */}
+      <div className="name-input">
+        <label htmlFor="user-name">שם המשתמש:</label>
+        <input
+          id="user-name"
+          type="text"
+          value={props.userName}
+          onChange={(event) => props.onNameChange(event.target.value)}
+          placeholder="הקלידו את שמכם"
+        />
+      </div>
     </header>
   )
 }

@@ -5,6 +5,7 @@
 function TaskList(props) {
   // props.tasks = מערך של אובייקטים, כל אובייקט הוא משימה:
   // { id: ..., name: ..., status: ... }
+  // props.onToggle = פונקציה שמקבלת id ומחליפה את הסטטוס של אותה משימה.
 
   return (
     <section className="task-list">
@@ -12,14 +13,27 @@ function TaskList(props) {
 
       {/* .map עובר על כל משימה במערך ומחזיר עבורה שורה ברשימה */}
       <ul>
-        {props.tasks.map((task) => (
-          <li key={task.id}>
-            {/* מציגים את שם המשימה */}
-            <span className="task-name">{task.name}</span>
-            {/* מציגים את הסטטוס של המשימה */}
-            <span className="task-status">{task.status}</span>
-          </li>
-        ))}
+        {props.tasks.map((task) => {
+          // האם המשימה הושלמה — משפיע על העיצוב ועל הטקסט בכפתור
+          const isDone = task.status === 'הושלם'
+
+          return (
+            <li key={task.id} className={isDone ? 'done' : ''}>
+              {/* שם המשימה */}
+              <span className="task-name">{task.name}</span>
+
+              {/* כפתור לחיץ שמחליף את הסטטוס הלוך וחזור */}
+              <button
+                type="button"
+                className="task-status-button"
+                onClick={() => props.onToggle(task.id)}
+                aria-pressed={isDone}
+              >
+                {task.status}
+              </button>
+            </li>
+          )
+        })}
       </ul>
     </section>
   )
