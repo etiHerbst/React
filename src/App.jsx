@@ -1,85 +1,150 @@
-// קומפוננטת האב (App)
-// דף זה = האב של כל הקומפוננטות.
-// הוא מגדיר את הנתונים (רשימת המשימות ושם המשתמש)
-// ומעביר אותם לשלושת קומפוננטות הבנים דרך props.
+ import { useState } from 'react'
+ import heroImg from './assets/hero.png'
+ import reactLogo from './assets/react.svg'
+ import viteLogo from './assets/vite.svg'
+  import QuantityCounter from './QuantityCounter';
+  import ProductDescription from './ProductDescription';
+  import ContactForm from './ContactForm'
 
-// ייבוא useState כדי שנוכל לשמור את רשימת המשימות במצב (state) של הקומפוננטה
-import { useState } from 'react'
+ import './App.css'
 
-// ייבוא הקומפוננטות שיצרנו, כדי שנוכל להשתמש בהן כאן
-import Header from './Header.jsx'
-import TaskForm from './TaskForm.jsx'
-import TaskList from './TaskList.jsx'
-import TaskSummary from './TaskSummary.jsx'
 
-// טעינת קובץ העיצוב
-import './App.css'
+ function App() {
+  return(
+  <div>
+  <QuantityCounter></QuantityCounter>
+  <ProductDescription></ProductDescription>
+  <ContactForm></ContactForm>
+   </div>)
+//   const [count, setCount] = useState(0)
 
-function App() {
-  // רשימת המשימות נשמרת ב-state — כך שכאשר היא משתנה, React מרנדר מחדש
-  // את האב ואת כל הבנים שמקבלים אותה.
-  // כל משימה היא אובייקט: id (מספר מזהה), name (שם), status (סטטוס)
-  // כל משימה שומרת גם previousStatus — הסטטוס שאליו נחזור כשמבטלים "הושלם"
-  const [tasks, setTasks] = useState([
-    { id: 1, name: 'כתיבת קוד HTML', status: 'הושלם', previousStatus: 'לא התחיל' },
-    { id: 2, name: 'כתיבת קוד CSS', status: 'הושלם', previousStatus: 'לא התחיל' },
-    { id: 3, name: 'כתיבת קוד JavaScript', status: 'בתהליך', previousStatus: 'לא התחיל' },
-    { id: 4, name: 'בדיקת האתר', status: 'לא התחיל', previousStatus: 'לא התחיל' },
-  ])
+//   return (
+//     <>
+//       <section id="center">
+//         <div className="hero">
+//           <img src={heroImg} className="base" width="170" height="179" alt="" />
+//           <img src={reactLogo} className="framework" alt="React logo" />
+//           <img src={viteLogo} className="vite" alt="Vite logo" />
+//         </div>
+//         <div>
+//           <h1>Get started</h1>
+//           <p>
+//             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+//           </p>
+//         </div>
+//         <button
+//           type="button"
+//           className="counter"
+//           onClick={() => setCount((count) => count + 1)}
+//         >
+//           Count is {count}
+//         </button>
+//       </section>
 
-  // החלפת הסטטוס של משימה מסוימת בין "הושלם" לבין הסטטוס שהיה לה לפני כן.
-  // מסומנת כ"הושלם": שומרים את הסטטוס הנוכחי ב-previousStatus.
-  // מבוטלת: חוזרים ל-previousStatus (או ל"לא התחיל" אם אין).
-  const toggleTask = (id) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) => {
-        if (task.id !== id) return task
+//       <div className="ticks"></div>
 
-        const isDone = task.status === 'הושלם'
+//       <section id="next-steps">
+//         <div id="docs">
+//           <svg className="icon" role="presentation" aria-hidden="true">
+//             <use href="/icons.svg#documentation-icon"></use>
+//           </svg>
+//           <h2>Documentation</h2>
+//           <p>Your questions, answered</p>
+//           <ul>
+//             <li>
+//               <a href="https://vite.dev/" target="_blank">
+//                 <img className="logo" src={viteLogo} alt="" />
+//                 Explore Vite
+//               </a>
+//             </li>
+//             <li>
+//               <a href="https://react.dev/" target="_blank">
+//                 <img className="button-icon" src={reactLogo} alt="" />
+//                 Learn more
+//               </a>
+//             </li>
+//           </ul>
+//         </div>
+//         <div id="social">
+//           <svg className="icon" role="presentation" aria-hidden="true">
+//             <use href="/icons.svg#social-icon"></use>
+//           </svg>
+//           <h2>Connect with us</h2>
+//           <p>Join the Vite community</p>
+//           <ul>
+//             <li>
+//               <a href="https://github.com/vitejs/vite" target="_blank">
+//                 <svg
+//                   className="button-icon"
+//                   role="presentation"
+//                   aria-hidden="true"
+//                 >
+//                   <use href="/icons.svg#github-icon"></use>
+//                 </svg>
+//                 GitHub
+//               </a>
+//             </li>
+//             <li>
+//               <a href="https://chat.vite.dev/" target="_blank">
+//                 <svg
+//                   className="button-icon"
+//                   role="presentation"
+//                   aria-hidden="true"
+//                 >
+//                   <use href="/icons.svg#discord-icon"></use>
+//                 </svg>
+//                 Discord
+//               </a>
+//             </li>
+//             <li>
+//               <a href="https://x.com/vite_js" target="_blank">
+//                 <svg
+//                   className="button-icon"
+//                   role="presentation"
+//                   aria-hidden="true"
+//                 >
+//                   <use href="/icons.svg#x-icon"></use>
+//                 </svg>
+//                 X.com
+//               </a>
+//             </li>
+//             <li>
+//               <a href="https://bsky.app/profile/vite.dev" target="_blank">
+//                 <svg
+//                   className="button-icon"
+//                   role="presentation"
+//                   aria-hidden="true"
+//                 >
+//                   <use href="/icons.svg#bluesky-icon"></use>
+//                 </svg>
+//                 Bluesky
+//               </a>
+//             </li>
+//           </ul>
+//         </div>
+//       </section>
 
-        return isDone
-          ? { ...task, status: task.previousStatus || 'לא התחיל' }
-          : { ...task, previousStatus: task.status, status: 'הושלם' }
-      })
-    )
-  }
+//       <div className="ticks"></div>
+//       <section id="spacer"></section>
+//     </>
+//   )
+// }
 
-  // הוספת משימה חדשה לרשימה.
-  // מזהה חדש = המזהה הגבוה ביותר + 1 (כך אין כפילויות).
-  // משימה חדשה מתחילה תמיד בסטטוס "לא התחיל".
-  const addTask = (name) => {
-    const cleanName = name.trim()
-    if (cleanName === '') return // לא מוסיפים משימה ריקה
 
-    setTasks((prevTasks) => {
-      const nextId = prevTasks.reduce((max, task) => Math.max(max, task.id), 0) + 1
 
-      return [
-        ...prevTasks,
-        { id: nextId, name: cleanName, status: 'לא התחיל', previousStatus: 'לא התחיל' },
-      ]
-    })
-  }
+// function shoeAlert(){
+//   function handleClick(){
+//     alert("bH I Succeed");
+//   }
+//   return <button onClick={handleClick}>click here!!</button>;
+// }
+// shoeAlert();
+//   return <button onClick={()=> alert("bH I Succeed 2")}>click here</button>;
+ 
 
-  // שם המשתמש נשמר ב-state — כך שהכותרת מתעדכנת כשמקלידים בשדה השם
-  const [userName, setUserName] = useState('משה ישראלי')
 
-  return (
-    <div className="app">
-      {/* קומפוננטת הכותרת — מקבלת את שם המשתמש ואת הפונקציה לעדכונו */}
-      <Header userName={userName} onNameChange={setUserName} />
+  //function showInput(){
+   
 
-      {/* טופס הוספת משימה — מעביר את השם שהוקלד לאב */}
-      <TaskForm onAdd={addTask} />
-
-      {/* קומפוננטת הסיכום — מקבלת את רשימת המשימות המשותפת */}
-      <TaskSummary tasks={tasks} />
-
-      {/* קומפוננטת רשימת המשימות — מקבלת את המשימות ואת הפונקציה לשינוי סטטוס */}
-      <TaskList tasks={tasks} onToggle={toggleTask} />
-    </div>
-  )
-}
-
-// מייצאים את הקומפוננטה כדי ש-main.jsx יוכל להרכיב אותה
-export default App
+ }
+  export default App
